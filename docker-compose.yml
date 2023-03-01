@@ -28,7 +28,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - symfony_db_data:/var/lib/mysql
+      - dealgames_db_data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin
@@ -49,4 +49,4 @@ services:
       - "1025:1025"
 
 volumes:
-  symfony_db_data:
+  dealgames_db_data:
