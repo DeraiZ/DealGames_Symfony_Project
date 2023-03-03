@@ -3,6 +3,10 @@
 
 {% block body %}
     <form class="form_container" enctype="multipart/form-data" method="post">
+        <div class="userName">
+            {{ form_label(form.name, 'Votre nom d\'utilisateur' ) }}
+            {{ form_widget(form.name) }}
+        </div>
         <div class="userEmail">
             {{ form_label(form.mail, 'Mail' ) }}
             {{ form_widget(form.mail) }}
@@ -11,10 +15,14 @@
             {{ form_label(form.password, 'Mot de passe' ) }}
             {{ form_widget(form.password) }}
         </div>
+        <div class="confirmPassword">
+            <label for="">Confirmation du mot de passe</label>
+            <input class="conf_password" type="password" id="conf_password" name="conf_password" />
+        </div>
 
         <div class="conexion-btn">
-            <a href="/login" class="btn btn-dark send_btn">Inscription</a>
             <a href="/" type="submit" class="btn btn-dark send_btn">Connexion</a>
         </div>
     </form>
+
 {% endblock %}

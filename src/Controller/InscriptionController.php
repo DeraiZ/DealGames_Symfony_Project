@@ -2,17 +2,26 @@
 
 namespace App\Controller;
 
+use App\Entity\Users;
+use App\Form\UsersFormType;
+use App\Repository\UsersRepository;
+use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use \Datetime;
 
 class InscriptionController extends AbstractController
 {
-    #[Route('/inscription', name: 'app_inscription')]
-    public function index(): Response
+    #[Route('/login', name: 'app_login')]
+    public function index(Request $request, UsersRepository $usersRepository): Response
     {
-        return $this->render('inscription/index.html.twig', [
-            'controller_name' => 'InscriptionController',
+        $announce = new Users();
+        $form = $this->createForm(UsersFormType::class, $announce);
+        $form-> handleRequest($request);
+        return $this->render('login/index.html.twig', [
+            'form' => $form,
         ]);
     }
 }

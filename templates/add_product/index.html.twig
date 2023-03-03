@@ -1,16 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AddProductController!{% endblock %}
 
 {% block body %}
-    <form class="adding" action="" method="post">
-        <label>Nom de votre Jeux</label>
-        <input type="text" class="product_name_input" id="product" name="product"/>
-        <label for="description">Description de votre jeux</label>
-        <textarea name="description" id="description"></textarea>
-        <label for="game_img">Image de votre jeux</label>
-        <input type="file"
-               id="game_img" name="game_img"
-               accept="image/png, image/jpeg">
+    <form class="form_container" enctype="multipart/form-data" method="post">
+        <div class="announce_name">
+            {{ form_label(form.product, 'Nom de l\'Annonce' ) }}
+            {{ form_widget(form.product) }}
+        </div>
+        <div class="announce_description">
+            {{ form_label(form.description, 'Description de l\'Annonce' ) }}
+            {{ form_widget(form.description) }}
+        </div>
+        <div class="announce_image">
+            {{ form_label(form.imageFile, 'Image de l\'Annonce' ) }}
+            {{ form_widget(form.imageFile) }}
+        </div>
+        <button onclick="window.location='/'" type="submit" class="btn btn-dark send_btn">Envoyer</button>
+        {{ form_rest(form) }}
     </form>
+
+
 {% endblock %}

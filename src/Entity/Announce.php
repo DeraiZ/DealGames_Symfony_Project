@@ -6,9 +6,12 @@ use App\Entity\Traits\Timestampable;
 use App\Repository\AnnounceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: AnnounceRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[Vich\Uploadable]
 class Announce
 {
     use Timestampable;
@@ -30,9 +33,34 @@ class Announce
     #[ORM\Column]
     private ?int $user_id = null;
 
+    /**
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image")
+     * @var File
+     */
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image', size: 'imageSize')]
+    private File $imageFile;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 
     public function getProduct(): ?string
@@ -82,4 +110,25 @@ class Announce
 
         return $this;
     }
+
+    /**
+     * @param int|null $imageSize
+     */
+    public function setImageSize(?int $imageSize): void
+    {
+        $this->imageSize = $imageSize;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+
+
+
+
 }
