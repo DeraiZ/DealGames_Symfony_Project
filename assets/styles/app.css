@@ -210,3 +210,12 @@ label, .send_btn{
 .confirmPassword{
     margin-left: 14%;
 }
+
+.game_img{
+    width: 286px;
+    height: 312px;
+}
+
+.img-fluid{
+    height: 100%    ;
+}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Announce;
+use App\Repository\AnnounceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,20 +11,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-
-
     #[Route('/product/{id}', name: 'product_show')]
-    public function show(EntityManagerInterface $entityManager, int $id): Response
+    public function show(int $id, AnnounceRepository $productRepository): Response
     {
-        $product = $entityManager->getRepository(Announce::class)->find($id);
-
-        if (!$product) {
-            throw $this->createNotFoundException(
-                'No product found for id '.$id
-            );
-        }
-
-        ;
+        $product = $productRepository
+            ->find($id);
 
         // or render a template
         // in the template, print things with {{ product.name }}
